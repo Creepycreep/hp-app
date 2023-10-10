@@ -1,0 +1,36 @@
+@use '../../config/index.scss' as config;
+
+.container {
+  width: config.$container-max;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media (max-width: config.$xxl) {
+    width: config.$container-xxl;
+  }
+
+  @media (max-width: config.$xl) {
+    width: config.$container-xl;
+  }
+
+  @media (max-width: config.$lg) {
+    width: config.$container-lg;
+  }
+
+  @media (max-width: config.$md) {
+    width: config.$container-md;
+  }
+
+  @media (max-width: config.$sm) {
+    width: config.$container-sm;
+  }
+
+  @media (max-width: config.$xs) {
+    width: config.$container-xs;
+    padding: 0 20px;
+  }
+
+}

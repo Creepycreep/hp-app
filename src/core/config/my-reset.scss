@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  font-size: 16px;
+
+  * {
+    margin: 0;
+    padding: 0;
+
+    font-size: inherit;
+    color: inherit;
+
+    box-sizing: border-box;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  button,
+  input {
+    font-family: inherit;
+    background: none;
+    border: none;
+    outline: none;
+  }
+
+  button:focus,
+  input:focus {
+    border: none;
+    outline: none;
+  }
+}

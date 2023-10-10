@@ -1,0 +1,47 @@
+@use '../../config/index.scss' as config;
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  padding: 5px 10px;
+  font-weight: 500;
+  border-radius: 15px;
+  letter-spacing: 1px;
+  transition: all .2s;
+
+  &--sm {
+    height: 25px;
+    font-size: 12px;
+  }
+
+  &--lg {
+    height: 46px;
+    border-radius: 25px;
+  }
+
+  &--filled {
+    background-color: config.$colors-purple;
+    border: 1px solid config.$colors-purple;
+
+    &:hover,
+    &:focus {
+      background-color: config.$colors-purple-dark;
+      border: 1px solid config.$colors-purple-dark;
+    }
+  }
+
+  &--outline {
+    border: 1px solid config.$colors-white;
+
+    &:hover,
+    &:focus {
+      background-color: config.$colors-white;
+      border: 1px solid config.$colors-white;
+
+      color: config.$colors-bg;
+    }
+  }
+}
