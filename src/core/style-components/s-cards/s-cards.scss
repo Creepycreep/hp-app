@@ -1,0 +1,13 @@
+@use '../../config/index.scss' as config;
+
+.s-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+
+  &>* {
+    width: 100%;
+  }
+
+  align-items: center;
+}

@@ -1,0 +1,125 @@
+@use '../../core/config/index.scss' as config;
+
+.card {
+  padding: 35px;
+
+  background-color: config.$colors-purple-bg;
+  color: config.$colors-black;
+
+  display: grid;
+  grid-template-areas:
+    'image title'
+    'image controls'
+    'descr descr';
+
+  grid-template-columns: max-content 1fr;
+  gap: 15px 25px;
+
+  @media (max-width: config.$md) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+  }
+
+  &__image {
+    grid-area: image;
+
+    width: 150px;
+    height: 150px;
+    border: 1px solid white;
+  }
+
+  &__title {
+    grid-area: title;
+
+    font-weight: 600;
+    font-size: 22px;
+
+    @media (max-width: config.$md) {
+      align-self: center;
+    }
+  }
+
+  &__description {
+    grid-area: descr;
+
+    font-size: 14px;
+  }
+
+  &__controls {
+    grid-area: controls;
+    color: config.$colors-white;
+    align-self: end;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    @media (max-width: config.$md) {
+      width: 100%;
+      align-items: center;
+    }
+
+    .button {
+      text-transform: uppercase;
+      height: 34px;
+      max-width: 200px;
+      width: 100%;
+    }
+  }
+
+  &--random {
+    display: grid;
+    grid-template-areas:
+      'image title'
+      'image descr'
+      'image controls';
+
+    gap: 15px 30px;
+
+    @media (max-width: config.$md) {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .card {
+      &__controls {
+        margin-top: auto;
+        flex-direction: row;
+        gap: 20px;
+
+        @media (max-width: config.$md) {
+          width: 100%;
+        }
+
+        @media (max-width: config.$sm) {
+          flex-direction: column;
+          align-items: center;
+          gap: 10px;
+        }
+
+        &>* {
+          width: calc((100% - 20px)/2);
+
+          @media (max-width: config.$sm) {
+            width: 100%;
+          }
+        }
+      }
+
+      &__image {
+        align-self: center;
+        width: 180px;
+        height: 180px;
+
+        @media (max-width: config.$lg) {
+          width: 150px;
+          height: 150px;
+        }
+      }
+    }
+  }
+}

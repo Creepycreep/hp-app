@@ -1,0 +1,7 @@
+@use '../../config/index.scss' as config;
+
+.s-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}

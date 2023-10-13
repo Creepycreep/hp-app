@@ -1,0 +1,60 @@
+@use '../../core/config/index.scss' as config;
+
+.preview-card {
+  box-shadow: config.$colors-shadow-dark;
+  border: 1px solid config.$colors-gold;
+
+  // max-width: 200px;
+  // height: 320px;
+
+  &:hover,
+  .is-active {
+    box-shadow: config.$colors-shadow;
+    transform: translate(0, -10px);
+  }
+
+  &.preview-card--gryf:hover,
+  .is-active {
+    box-shadow: config.$colors-shadow;
+    transform: translate(0, -10px);
+  }
+
+  &.preview-card--slyth:hover,
+  .is-active {
+    box-shadow: config.$colors-shadow;
+    transform: translate(0, -10px);
+  }
+
+  &.preview-card--rav:hover,
+  .is-active {
+    box-shadow: config.$colors-shadow;
+    transform: translate(0, -10px);
+  }
+
+  &.preview-card--huff:hover,
+  .is-active {
+    box-shadow: config.$colors-shadow;
+    transform: translate(0, -10px);
+  }
+
+  @media (max-width: config.$sm) {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  &__image {
+    border: 1px solid config.$colors-gold;
+
+    width: 100%;
+    aspect-ratio: 1/1;
+  }
+
+  &__text {
+    padding: 15px;
+
+    span:first-child {
+      font-size: 22px;
+      font-weight: 600;
+    }
+  }
+}

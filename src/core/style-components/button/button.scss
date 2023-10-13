@@ -26,10 +26,13 @@
     background-color: config.$colors-purple;
     border: 1px solid config.$colors-purple;
 
+
     &:hover,
     &:focus {
       background-color: config.$colors-purple-dark;
       border: 1px solid config.$colors-purple-dark;
+      box-shadow: config.$colors-shadow;
+
     }
   }
 

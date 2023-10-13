@@ -1,16 +1,8 @@
 @use '../../config/index.scss' as config;
 
 .container {
-  width: config.$container-max;
+  width: config.$container-xxl;
   margin: 0 auto;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  @media (max-width: config.$xxl) {
-    width: config.$container-xxl;
-  }
 
   @media (max-width: config.$xl) {
     width: config.$container-xl;
