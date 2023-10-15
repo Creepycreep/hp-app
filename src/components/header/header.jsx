@@ -11,6 +11,8 @@ const Header = () => {
           <button href='#' className='menu__item is-active'>Characters</button>
           <span>/</span>
           <button href='#' className='menu__item '>Spells</button>
+          <span>/</span>
+          <button href='#' className='menu__item '>Potions</button>
         </nav>
       </div>
     </header>

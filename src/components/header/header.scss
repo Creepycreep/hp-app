@@ -25,11 +25,19 @@
   .menu {
     span {
       font-size: 24px;
+
+      @media (max-width: config.$md) {
+        font-size: 20px;
+      }
     }
 
     &__item {
       font-size: 24px;
       position: relative;
+
+      @media (max-width: config.$md) {
+        font-size: 20px;
+      }
 
       &::after {
         content: '';
