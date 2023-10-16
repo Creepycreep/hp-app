@@ -7,6 +7,7 @@ import gryffindor from '../../core/assets/icons/gryffindor.svg';
 import hufflepuff from '../../core/assets/icons/hufflepuff.svg';
 import ravenclaw from '../../core/assets/icons/ravenclaw.svg';
 import slytherin from '../../core/assets/icons/slytherin.svg';
+import unknown from '../../core/assets/icons/shield-with-question-mark.svg';
 
 import '../card/card.scss';
 import './card-random.scss';
@@ -16,7 +17,7 @@ import HPService from '../../services/HPServices';
 class CardRandom extends Component {
   constructor(props) {
     super(props);
-    // this.updateChar()
+    this.randomData()
   }
 
   state = {
@@ -31,16 +32,31 @@ class CardRandom extends Component {
 
   hpService = new HPService();
 
-  updateChar = () => {
+  randomData = () => {
     this.hpService
-      .getCharacter('harry-potter')
+      .getId(this.getRandomId(46, 0))
+      .then(res => {
+        const id = res.data.map(item => item.id)[this.getRandomId(99, 0)];
+
+        this.updateChar(id)
+      });
+  }
+
+  getRandomId = (max, min) => {
+    return Math.floor(Math.random() * (max - min))
+  }
+
+  updateChar = (slug) => {
+    const id = slug;
+    this.hpService
+      .getCharacter(id)
       .then(res => {
         this.setState({
           thumbnail: res.data.attributes.image,
           name: res.data.attributes.name,
           gender: res.data.attributes.gender,
           house: res.data.attributes.house,
-          blood_status: res.data.attributes.blood_status,
+          blood_status: res.data.attributes.blood_status ? res.data.attributes.blood_status : '???',
           self: res.data.links.self,
           wiki: res.data.attributes.wiki,
         })
@@ -69,7 +85,7 @@ class CardRandom extends Component {
         case 'Slytherin':
           return slytherin;
         default:
-          return '';
+          return unknown;
       }
     }
 
@@ -83,7 +99,7 @@ class CardRandom extends Component {
               </div>
               <div className="card__title">
                 <span>{name}</span>
-                <img className='card__house' src={houseIcon(house)} alt={name} />
+                <img className='card__house' src={houseIcon(house)} alt={house} />
               </div>
               <div className="card__description">
                 <div>
@@ -110,7 +126,7 @@ class CardRandom extends Component {
                 Do you want to get to know him better?</p>
 
               <p>Or choose another one</p>
-              <button className='button button--filled random__btn--trigger'>TRY IT</button>
+              <button onClick={this.randomData} className='button button--filled random__btn--trigger'>TRY IT</button>
             </div >
           </div>
         </div>

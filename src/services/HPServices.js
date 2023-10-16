@@ -1,5 +1,8 @@
 class HPService {
-  _apiBase = 'https://api.potterdb.com/v1/';
+  //46 char pages
+  _apiBase = 'https://api.potterdb.com/v1';
+  //no pages
+  _apiBase2 = 'https://hp-api.onrender.com/api/'
 
   getData = async (url) => {
     let result = await fetch(url);
@@ -9,8 +12,8 @@ class HPService {
     return await result.json()
   }
 
-  getId = () => {
-    return this.getData(`${this._apiBase}/characters?page[size]=100`);
+  getId = (pageNum) => {
+    return this.getData(`${this._apiBase}/characters?page[number]=${pageNum}?page[size]=100`);
   }
 
 
