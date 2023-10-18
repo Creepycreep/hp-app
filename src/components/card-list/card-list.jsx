@@ -3,10 +3,12 @@ import './card-list.scss'
 import PreviewCard from '../preview-card/preview-card'
 
 const CardList = () => {
+  const cards = () => {
+    return <PreviewCard />
+  }
   return (
     <div className="card-list">
-      <PreviewCard />
-      <PreviewCard />
+      {cards}
     </div>
   )
 
