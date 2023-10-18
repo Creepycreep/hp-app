@@ -17,10 +17,6 @@ import Spinner from '../spinner/spinner.js';
 import Error from '../error/error';
 
 class CardRandom extends Component {
-  constructor(props) {
-    super(props);
-    this.randomData()
-  }
 
   state = {
     char: {},
@@ -58,9 +54,13 @@ class CardRandom extends Component {
   updateChar = (slug) => {
     const id = slug;
     this.hpService
-      .getCharacter('1')
+      .getCharacter(id)
       .then(this.onCharLoaded)
       .catch(this.onError);
+  }
+
+  componentDidMount() {
+    this.randomData()
   }
 
   render() {

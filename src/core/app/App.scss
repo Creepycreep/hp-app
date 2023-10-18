@@ -5,7 +5,6 @@
 @use '../style-components/button/button.scss';
 @use '../style-components/s-cards/s-cards.scss';
 @use '../style-components/s-aside/s-aside.scss';
-@use '../../components/grid-list/grid-list.scss';
 
 body {
   background-color: config.$colors-bg;

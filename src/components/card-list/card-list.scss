@@ -1,6 +1,6 @@
 @use '../../core/config/index.scss' as config;
 
-.grid-list {
+.card-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px 25px;
