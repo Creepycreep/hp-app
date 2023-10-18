@@ -1,18 +1,19 @@
 {
   "files": {
-    "main.css": "/hp-app/static/css/main.31e7ad91.css",
-    "main.js": "/hp-app/static/js/main.c005cdf9.js",
+    "main.css": "/hp-app/static/css/main.0a3184f9.css",
+    "main.js": "/hp-app/static/js/main.3eb00630.js",
     "static/media/ravenclaw.svg": "/hp-app/static/media/ravenclaw.cb46aecf37727d6bb7945f06f632e837.svg",
+    "static/media/noImg.png": "/hp-app/static/media/noImg.165fd939ce0bca28ab4c.png",
     "static/media/gryffindor.svg": "/hp-app/static/media/gryffindor.1ebc37db196c1f37c4ec6293ab6a4e77.svg",
     "static/media/hufflepuff.svg": "/hp-app/static/media/hufflepuff.54d13ac28e99ddf4500766ca97aebc1b.svg",
     "static/media/slytherin.svg": "/hp-app/static/media/slytherin.a562c8b5856fda3afdf3390ba0d4d2d6.svg",
     "static/media/shield-with-question-mark.svg": "/hp-app/static/media/shield-with-question-mark.304fa53faea496007d35b514be75eabe.svg",
     "index.html": "/hp-app/index.html",
-    "main.31e7ad91.css.map": "/hp-app/static/css/main.31e7ad91.css.map",
-    "main.c005cdf9.js.map": "/hp-app/static/js/main.c005cdf9.js.map"
+    "main.0a3184f9.css.map": "/hp-app/static/css/main.0a3184f9.css.map",
+    "main.3eb00630.js.map": "/hp-app/static/js/main.3eb00630.js.map"
   },
   "entrypoints": [
-    "static/css/main.31e7ad91.css",
-    "static/js/main.c005cdf9.js"
+    "static/css/main.0a3184f9.css",
+    "static/js/main.3eb00630.js"
   ]
 }
