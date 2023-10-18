@@ -7,7 +7,7 @@
     box-shadow: config.$colors-shadow-dark;
 
     @media (max-width: config.$md) {
-      flex-direction: column;
+      flex-direction: column-reverse;
     }
 
     &>* {

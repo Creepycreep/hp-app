@@ -21,13 +21,7 @@ class CardRandom extends Component {
   }
 
   state = {
-    thumbnail: null,
-    name: null,
-    gender: null,
-    house: null,
-    blood_status: null,
-    self: null,
-    wiki: null,
+    char: {}
   }
 
   hpService = new HPService();
@@ -43,28 +37,22 @@ class CardRandom extends Component {
   }
 
   getRandomId = (max, min) => {
-    return Math.floor(Math.random() * (max - min))
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
+  onCharLoaded = (char) => {
+    this.setState({ char })
   }
 
   updateChar = (slug) => {
     const id = slug;
     this.hpService
       .getCharacter(id)
-      .then(res => {
-        this.setState({
-          thumbnail: res.data.attributes.image,
-          name: res.data.attributes.name,
-          gender: res.data.attributes.gender,
-          house: res.data.attributes.house,
-          blood_status: res.data.attributes.blood_status ? res.data.attributes.blood_status : '???',
-          self: res.data.links.self,
-          wiki: res.data.attributes.wiki,
-        })
-      });
+      .then(this.onCharLoaded);
   }
 
   render() {
-    const { thumbnail, name, gender, house, blood_status, self, wiki } = this.state;
+    const { char: { thumbnail, name, gender, house, blood_status, self, wiki } } = this.state;
 
     const genderIcon = (gender) => {
       if (gender === 'Female') {
