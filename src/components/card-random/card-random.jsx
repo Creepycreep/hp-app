@@ -13,6 +13,8 @@ import '../card/card.scss';
 import './card-random.scss';
 
 import HPService from '../../services/HPServices';
+import Spinner from '../spinner/spinner.js';
+import Error from '../error/error';
 
 class CardRandom extends Component {
   constructor(props) {
@@ -21,7 +23,9 @@ class CardRandom extends Component {
   }
 
   state = {
-    char: {}
+    char: {},
+    loading: true,
+    error: false
   }
 
   hpService = new HPService();
@@ -41,74 +45,44 @@ class CardRandom extends Component {
   }
 
   onCharLoaded = (char) => {
-    this.setState({ char })
+    this.setState({ char, loading: false })
+  }
+
+  onError = () => {
+    this.setState({
+      loading: false, error: true
+    })
+
   }
 
   updateChar = (slug) => {
     const id = slug;
     this.hpService
-      .getCharacter(id)
-      .then(this.onCharLoaded);
+      .getCharacter('1')
+      .then(this.onCharLoaded)
+      .catch(this.onError);
   }
 
   render() {
-    const { char: { thumbnail, name, gender, house, blood_status, self, wiki } } = this.state;
+    const { char, loading, error } = this.state;
 
-    const genderIcon = (gender) => {
-      if (gender === 'Female') {
-        return mdiGenderFemale;
-      } else {
-        return mdiGenderMale;
-      }
-    };
+    const isError = error ? <Error /> : null;
+    const isLoading = loading ? <Spinner /> : null;
+    const content = !(isError || isLoading) ? <View char={char} /> : null;
 
-    const houseIcon = (house) => {
-      switch (house) {
-        case 'Gryffindor':
-          return gryffindor;
-        case 'Hufflepuff':
-          return hufflepuff;
-        case 'Ravenclaw':
-          return ravenclaw;
-        case 'Slytherin':
-          return slytherin;
-        default:
-          return unknown;
-      }
-    }
+    // if (loading) {
+    //   return (
+    //     
+    //   )
+    // }
 
     return (
-      <section className='random'>
+      <section className='random' data-random="wow">
         <div className="container">
           <div className="random__body">
-            <div className="card random__card">
-              <div className="card__image image__box">
-                <img src={thumbnail} alt={name} />
-              </div>
-              <div className="card__title">
-                <span>{name}</span>
-                <img className='card__house' src={houseIcon(house)} alt={house} />
-              </div>
-              <div className="card__description">
-                <div>
-                  <span>Gender: </span>
-                  <Icon path={genderIcon(gender)} size={'24px'} />
-                </div>
-
-                <div>
-                  <span>Blood status:</span>
-                  <span>{blood_status}</span>
-                </div>
-
-              </div>
-
-
-              <div className="card__controls">
-                <a href={self} className='button button--filled'>Homepage</a>
-                <a href={wiki} className='button button--outline'>Wiki</a>
-              </div>
-            </div>
-
+            {isError}
+            {isLoading}
+            {content}
             <div className='random__btn'>
               <p>Random character for today!<br />
                 Do you want to get to know him better?</p>
@@ -123,4 +97,60 @@ class CardRandom extends Component {
   }
 }
 
+const View = ({ char }) => {
+  const { thumbnail, name, gender, house, blood_status, self, wiki } = char
+
+  const genderIcon = (gender) => {
+    if (gender === 'Female') {
+      return mdiGenderFemale;
+    } else {
+      return mdiGenderMale;
+    }
+  };
+
+  const houseIcon = (house) => {
+    switch (house) {
+      case 'Gryffindor':
+        return gryffindor;
+      case 'Hufflepuff':
+        return hufflepuff;
+      case 'Ravenclaw':
+        return ravenclaw;
+      case 'Slytherin':
+        return slytherin;
+      default:
+        return unknown;
+    }
+  }
+
+  return (
+    <div className="card random__card">
+      <div className="card__image image__box">
+        <img src={thumbnail} alt={name} />
+      </div>
+      <div className="card__title">
+        <span>{name}</span>
+        <img className='card__house' src={houseIcon(house)} alt={house} />
+      </div>
+      <div className="card__description">
+        <div>
+          <span>Gender: </span>
+          <Icon path={genderIcon(gender)} size={'24px'} />
+        </div>
+
+        <div>
+          <span>Blood status:</span>
+          <span>{blood_status}</span>
+        </div>
+
+      </div>
+
+
+      <div className="card__controls">
+        <a href={self} className='button button--filled'>Homepage</a>
+        <a href={wiki} className='button button--outline'>Wiki</a>
+      </div>
+    </div>
+  )
+}
 export default CardRandom

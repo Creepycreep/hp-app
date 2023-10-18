@@ -102,4 +102,22 @@
       }
     }
   }
+
+  .error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: config.$colors-white;
+
+    max-height: 250px;
+    overflow: hidden;
+
+    @media (max-width: config.$md) {
+      align-items: start;
+    }
+
+    img {
+      height: 100%;
+    }
+  }
 }
