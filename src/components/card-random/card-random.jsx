@@ -1,13 +1,7 @@
 import { Component } from 'react';
 
 import Icon from '@mdi/react';
-import { mdiGenderMale, mdiGenderFemale } from '@mdi/js';
 
-import gryffindor from '../../core/assets/icons/gryffindor.svg';
-import hufflepuff from '../../core/assets/icons/hufflepuff.svg';
-import ravenclaw from '../../core/assets/icons/ravenclaw.svg';
-import slytherin from '../../core/assets/icons/slytherin.svg';
-import unknown from '../../core/assets/icons/shield-with-question-mark.svg';
 
 import '../card/card.scss';
 import './card-random.scss';
@@ -70,12 +64,6 @@ class CardRandom extends Component {
     const isLoading = loading ? <Spinner /> : null;
     const content = !(isError || isLoading) ? <View char={char} /> : null;
 
-    // if (loading) {
-    //   return (
-    //     
-    //   )
-    // }
-
     return (
       <section className='random' data-random="wow">
         <div className="container">
@@ -100,29 +88,6 @@ class CardRandom extends Component {
 const View = ({ char }) => {
   const { thumbnail, name, gender, house, blood_status, self, wiki } = char
 
-  const genderIcon = (gender) => {
-    if (gender === 'Female') {
-      return mdiGenderFemale;
-    } else {
-      return mdiGenderMale;
-    }
-  };
-
-  const houseIcon = (house) => {
-    switch (house) {
-      case 'Gryffindor':
-        return gryffindor;
-      case 'Hufflepuff':
-        return hufflepuff;
-      case 'Ravenclaw':
-        return ravenclaw;
-      case 'Slytherin':
-        return slytherin;
-      default:
-        return unknown;
-    }
-  }
-
   return (
     <div className="card random__card">
       <div className="card__image image__box">
@@ -130,12 +95,12 @@ const View = ({ char }) => {
       </div>
       <div className="card__title">
         <span>{name}</span>
-        <img className='card__house' src={houseIcon(house)} alt={house} />
+        <img className='card__house' src={house} alt={house} />
       </div>
       <div className="card__description">
         <div>
           <span>Gender: </span>
-          <Icon path={genderIcon(gender)} size={'24px'} />
+          <Icon path={gender} size={'24px'} />
         </div>
 
         <div>
@@ -144,7 +109,6 @@ const View = ({ char }) => {
         </div>
 
       </div>
-
 
       <div className="card__controls">
         <a href={self} className='button button--filled'>Homepage</a>
