@@ -26,7 +26,6 @@ function App() {
           </aside>
         </main>
       </div>
-
     </>
   );
 }

@@ -2,7 +2,6 @@ import { Component } from 'react';
 
 import Icon from '@mdi/react';
 
-
 import '../card/card.scss';
 import './card-random.scss';
 

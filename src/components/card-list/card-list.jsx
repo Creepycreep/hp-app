@@ -1,33 +1,47 @@
+import { Component } from 'react';
+
 import './card-list.scss'
 
 import HPService from '../../services/HPServices';
-
 import PreviewCard from '../preview-card/preview-card'
 
-const CardList = () => {
-  const hpService = new HPService();
+class CardList extends Component {
+  state = {
+    chars: [],
+    loading: true,
+    error: false
+  }
 
-  const chars = () => {
-    hpService
+  hpService = new HPService();
+
+  chars = () => {
+    this.hpService
       .getAllCharacters()
       .then(res => {
-        const cards = res.map(char => {
-          const { id, thumbnail, name } = char;
-
-          return <PreviewCard key={id} thumbnail={thumbnail} name={name} />
-        })
-        return cards;
+        this.onCharLoaded(res)
       })
   }
 
+  onCharLoaded = (chars) => {
+    this.setState({ chars, loading: false })
+  }
+
+  componentDidMount() {
+    this.chars()
+  }
 
 
+  render() {
+    const { chars, loading, error } = this.state;
+    const cards = chars.map(char => {
+      return <PreviewCard key={char.id} image={char.thumbnail} name={char.name} />
+    })
 
-  return (
-    <div className="card-list">
-      {chars()}
-    </div>
-  )
-
+    return (
+      <div className="card-list" >
+        {cards}
+      </div>
+    )
+  }
 }
 export default CardList

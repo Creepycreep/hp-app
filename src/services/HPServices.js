@@ -62,8 +62,6 @@ class HPService {
       }
     }
 
-
-
     return {
       id: charAttr.slug,
       thumbnail: charAttr.image ? charAttr.image : noImg,
