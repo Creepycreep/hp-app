@@ -20,6 +20,8 @@ class CardRandom extends Component {
   hpService = new HPService();
 
   randomData = () => {
+    // this.wow.no = 0;
+
     this.hpService
       .getId(this.getRandomId(46, 0))
       .then(res => {
@@ -37,14 +39,18 @@ class CardRandom extends Component {
     this.setState({ char, loading: false })
   }
 
+  onCharLoading = () => {
+    this.setState({ loading: true })
+  }
+
   onError = () => {
     this.setState({
       loading: false, error: true
     })
-
   }
 
   updateChar = (slug) => {
+    this.onCharLoading();
     const id = slug;
     this.hpService
       .getCharacter(id)

@@ -1,17 +1,163 @@
+import { Component } from 'react';
+import Icon from '@mdi/react';
+
 import '../card/card.scss'
 
-const Card = () => {
+import HPService from '../../services/HPServices';
+import Spinner from '../spinner/spinner.js';
+import Error from '../error/error';
+import Skeleton from '../skeleton/skeleton';
+
+class Card extends Component {
+  state = {
+    char: null,
+    loading: false,
+    error: false
+  }
+
+  hpService = new HPService();
+
+  componentDidMount() {
+    this.updateChar()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.charId !== prevProps.charId) {
+      this.updateChar()
+    }
+  }
+
+  updateChar = () => {
+    const { charId } = this.props;
+    // this.wow.no = 0;
+
+    if (!charId) {
+      return
+    }
+
+    this.onCharLoading();
+    this.hpService
+      .getCharacter(charId)
+      .then(data => {
+        this.onCharLoaded(data)
+      })
+      .catch(this.onError)
+  }
+
+  onCharLoaded = (char) => {
+    this.setState({ char, loading: false })
+  }
+
+  onCharLoading = () => {
+    this.setState({ loading: true })
+  }
+
+  onError = () => {
+    this.setState({
+      loading: false, error: true
+    })
+  }
+
+
+  render() {
+    const { char, loading, error } = this.state;
+
+    const isSkeleton = error || loading || char ? null : <Skeleton />;
+    const isError = error ? <Error /> : null;
+    const isLoading = loading ? <Spinner /> : null;
+    const content = !(loading || error || !char) ? <View char={char} /> : null;
+
+    return (
+      <div className="card">
+        {isSkeleton}
+        {isError}
+        {isLoading}
+        {content}
+      </div>
+    )
+  }
+}
+
+const View = ({ char }) => {
+  const { thumbnail, name, gender, species, house, blood_status, animagus, patronus, wands, born, died, self, wiki } = char;
+
+  let wandsArr = []
+  if (wands) {
+    wandsArr = wands.map((wand, i) => {
+      return <li key={i}>{wand}</li>
+    })
+  }
+
   return (
-    <div className="card">
-      <div className="card__image image__box"></div>
-      <div className="card__title">Harry Potter</div>
-      <div className="card__description">In Norse mythology, Loki is a god or jötunn (or both). Loki is the son of Fárbauti and Laufey, and the brother of Helblindi and Býleistr. By the jötunn Angrboða, Loki is the father of Hel, the wolf Fenrir, and the world serpent Jörmungandr. By Sigyn, Loki is the father of Nari and/or Narfi and with the stallion Svaðilfari as the father, Loki gave birth—in the form of a mare—to the eight-legged horse Sleipnir. In addition, Loki is referred to as the father of Váli in the Prose Edda.</div>
+    <>
+      <div className="card__image image__box">
+        <img src={thumbnail} alt={name} />
+      </div>
+      <div className="card__title">
+        <span>{name}</span>
+        <img className='card__house' src={house} alt={house} />
+      </div>
+
+      <div className="card__description">
+        {born ?
+          <div>
+            <span>Born:</span>
+            <span>{born}</span>
+          </div>
+          : null}
+
+        {died ?
+          <div>
+            <span>Died:</span>
+            <span>{died}</span>
+          </div>
+          : null}
+
+        {species ?
+          <div>
+            <span>Species:</span>
+            <span>{species}</span>
+          </div>
+          : null}
+
+        <div>
+          <span>Gender: </span>
+          <Icon path={gender} size={'24px'} />
+        </div>
+
+        <div>
+          <span>Blood status:</span>
+          <span>{blood_status}</span>
+        </div>
+
+        {animagus ?
+          <div>
+            <span>Animagus:</span>
+            <span>{blood_status}</span>
+          </div>
+          : null}
+
+        {patronus ?
+          <div>
+            <span>Patronus:</span>
+            <span>{patronus}</span>
+          </div>
+          : null}
+
+        {wands ?
+          <div>
+            <span>Wands:</span>
+            <ul className='card__wands'>
+              {wandsArr}</ul>
+          </div>
+          : null}
+      </div>
 
       <div className="card__controls">
-        <button className='button button--filled'>Homepage</button>
-        <button className='button button--outline'>Wiki</button>
+        <a href={self} className='button button--filled'>Homepage</a>
+        <a href={wiki} className='button button--outline'>Wiki</a>
       </div>
-    </div>
+    </>
   )
 }
 

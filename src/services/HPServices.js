@@ -12,7 +12,9 @@ class HPService {
   //46 char pages
   _apiBase = 'https://api.potterdb.com/v1';
   //no pages
-  _apiBase2 = 'https://hp-api.onrender.com/api/'
+  _apiBase2 = 'https://hp-api.onrender.com/api/';
+
+  _pageNum = 9;
 
   getData = async (url) => {
     let result = await fetch(url);
@@ -23,11 +25,11 @@ class HPService {
   }
 
   getId = (pageNum) => {
-    return this.getData(`${this._apiBase}/characters?page[number]=${pageNum}?page[size]=100`);
+    return this.getData(`${this._apiBase}/characters?page[size]=100?page[number]=${pageNum}`);
   }
 
-  getAllCharacters = async () => {
-    const result = await this.getData(`${this._apiBase}/characters?page[size]=9`);
+  getAllCharacters = async (pageNum = this._pageNum) => {
+    const result = await this.getData(`${this._apiBase}/characters?page[size]=${pageNum}?page[number]=0`);
     return result.data.map(char => this._transformCharacter(char))
   }
 
@@ -67,10 +69,17 @@ class HPService {
       thumbnail: charAttr.image ? charAttr.image : noImg,
       name: charAttr.name,
       gender: genderIcon(charAttr.gender),
+      houseString: charAttr.house,
       house: houseIcon(charAttr.house),
       blood_status: charAttr.blood_status ? charAttr.blood_status : '???',
+      animagus: charAttr.animagus ? charAttr.animagus : null,
+      born: charAttr.born ? charAttr.born : null,
+      died: charAttr.died ? charAttr.died : null,
+      patronus: charAttr.patronus ? charAttr.patronus : null,
+      species: charAttr.species ? charAttr.species : null,
       self: char.links.self,
       wiki: charAttr.wiki,
+      wands: charAttr.wands.length === 0 ? null : charAttr.wands,
     }
   }
 }

@@ -15,4 +15,11 @@
     align-items: center;
     gap: 40px;
   }
+
+  &:has(.svg),
+  &:has(.error) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

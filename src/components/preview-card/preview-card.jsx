@@ -1,10 +1,26 @@
 import './preview-card.scss'
 
-const PreviewCard = ({ name, image }) => {
+const PreviewCard = ({ name, thumbnail, houseString, onCharSelected }) => {
+  const houseColor = (houseString) => {
+    switch (houseString) {
+      case 'Gryffindor':
+        return 'preview-card--gryf';
+      case 'Hufflepuff':
+        return 'preview-card--huff';
+      case 'Ravenclaw':
+        return 'preview-card--rav';
+      case 'Slytherin':
+        return 'preview-card--slyth';
+      default:
+        return '';
+    }
+  }
+
+
   return (
-    <div className="preview-card">
+    <div onClick={onCharSelected} className={`preview-card ${houseColor(houseString)}`}>
       <div className="preview-card__image">
-        <img src={image} alt={name} />
+        <img src={thumbnail} alt={name} />
       </div>
 
       <div className="preview-card__text">

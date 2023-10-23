@@ -1,4 +1,8 @@
+import { Component } from 'react';
+
 import './App.scss'
+
+import ErrorBoundary from '../../components/errorBoundary/errorBoundary';
 
 import Header from '../../components/header/header';
 import CardRandom from '../../components/card-random/card-random';
@@ -6,28 +10,46 @@ import Card from '../../components/card/card';
 import Search from '../../components/search/search';
 import CardList from '../../components/card-list/card-list';
 
-function App() {
-  return (
-    <>
-      <Header />
-      <CardRandom />
+class App extends Component {
+  state = {
+    selectedChar: null
+  }
 
-      <div className="container">
-        <main className="main">
-          <section className='main__col s-cards'>
-            <CardList />
+  onCharSelected = (id) => {
+    this.setState({
+      selectedChar: id
+    })
+  }
 
-            <button className='button button--filled button--load-more'>load more</button>
-          </section>
+  render() {
+    return (
+      <>
+        <Header />
 
-          <aside className='main__col s-aside'>
-            <Search />
-            <Card />
-          </aside>
-        </main>
-      </div>
-    </>
-  );
+        <ErrorBoundary>
+          <CardRandom />
+        </ErrorBoundary>
+
+        <div className="container">
+          <main className="main">
+            <section className='main__col s-cards'>
+              <ErrorBoundary>
+                <CardList onCharSelected={this.onCharSelected} />
+              </ErrorBoundary>
+            </section>
+
+            <aside className='main__col s-aside'>
+              <Search />
+              <ErrorBoundary>
+                <Card charId={this.state.selectedChar} />
+              </ErrorBoundary>
+            </aside>
+          </main>
+        </div>
+      </>
+    );
+  }
+
 }
 
 export default App;

@@ -15,25 +15,25 @@
 
   &.preview-card--gryf:hover,
   .is-active {
-    box-shadow: config.$colors-shadow;
+    box-shadow: config.$colors-shadow-gryf;
     transform: translate(0, -10px);
   }
 
   &.preview-card--slyth:hover,
   .is-active {
-    box-shadow: config.$colors-shadow;
+    box-shadow: config.$colors-shadow-slyth;
     transform: translate(0, -10px);
   }
 
   &.preview-card--rav:hover,
   .is-active {
-    box-shadow: config.$colors-shadow;
+    box-shadow: config.$colors-shadow-rav;
     transform: translate(0, -10px);
   }
 
   &.preview-card--huff:hover,
   .is-active {
-    box-shadow: config.$colors-shadow;
+    box-shadow: config.$colors-shadow-huff;
     transform: translate(0, -10px);
   }
 
@@ -43,7 +43,7 @@
   }
 
   &__image {
-    border: 1px solid config.$colors-gold;
+    // border: 1px solid config.$colors-gold;
 
     width: 100%;
     aspect-ratio: 1/1;
