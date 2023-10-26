@@ -24,8 +24,8 @@ class HPService {
     return await result.json()
   }
 
-  getId = (pageNum) => {
-    return this.getData(`${this._apiBase}/characters?page[size]=100?page[number]=${pageNum}`);
+  getId = async (pageNum) => {
+    return await this.getData(`${this._apiBase}/characters?page[size]=100?page[number]=${pageNum}`);
   }
 
   getAllCharacters = async (pageNum = this._pageNum) => {

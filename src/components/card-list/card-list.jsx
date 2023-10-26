@@ -13,7 +13,8 @@ class CardList extends Component {
     loading: true,
     error: false,
     loadingMore: false,
-    pageSize: 9,
+    pageSize: 72,
+    charsEnded: false,
   }
 
   hpService = new HPService();
@@ -24,7 +25,9 @@ class CardList extends Component {
 
 
   onCharLoaded = (newChars) => {
-    this.setState(({ chars, pageSize }) => ({
+    const ended = newChars.length >= 100 ? true : false;
+    this.setState(({ pageSize }) => ({
+      charsEnded: ended,
       chars: [...newChars],
       pageSize: pageSize + 9,
       loading: false,
@@ -50,9 +53,8 @@ class CardList extends Component {
     this.onRequest()
   }
 
-
   render() {
-    const { chars, loading, error } = this.state;
+    const { chars, loading, error, charsEnded } = this.state;
 
     if (chars.length === 0) {
       return (<Error />)
@@ -79,6 +81,7 @@ class CardList extends Component {
           className='button button--filled button--load-more'
           disabled={this.state.loadingMore}
           onClick={() => this.onRequest(this.state.pageSize)}
+          style={{ 'display': charsEnded ? 'none' : 'flex' }}
         >
           load more
         </button>
