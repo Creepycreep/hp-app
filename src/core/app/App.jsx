@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import './App.scss'
@@ -7,7 +8,9 @@ import ErrorBoundary from '../../components/errorBoundary/errorBoundary';
 import Header from '../../components/header/header';
 import CardRandom from '../../components/card-random/card-random';
 
-import { MainPage, ListPage, LostPage, ItemPage } from '../../pages/'
+import { MainPage, ListPage, ItemPage } from '../../pages/';
+
+const LostPage = lazy(() => import('../../pages/404'))
 
 const App = () => {
 
@@ -21,13 +24,15 @@ const App = () => {
 
       <div className="container">
         <main className="main">
-          <Routes>
-            <Route path='/' element={<MainPage />} />
-            <Route path='/:category' element={<ListPage />} />
-            <Route path='/:category/:itemId' element={<ItemPage />} />
+          <Suspense fallback={<span>Loading...</span>}>
+            <Routes>
+              <Route path='/' element={<MainPage />} />
+              <Route path='/:category' element={<ListPage />} />
+              <Route path='/:category/:itemId' element={<ItemPage />} />
 
-            <Route path='*' element={<LostPage />} />
-          </Routes>
+              <Route path='*' element={<LostPage />} />
+            </Routes>
+          </Suspense>
         </main>
       </div>
 
