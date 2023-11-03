@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/hp-app/static/css/main.7ca5e2e3.css",
-    "main.js": "/hp-app/static/js/main.b99d8320.js",
+    "main.js": "/hp-app/static/js/main.8040c5fb.js",
     "static/media/ravenclaw.svg": "/hp-app/static/media/ravenclaw.cb46aecf37727d6bb7945f06f632e837.svg",
     "static/media/error.gif": "/hp-app/static/media/error.42292aa12b6bc303ce99.gif",
     "static/media/noImg.png": "/hp-app/static/media/noImg.165fd939ce0bca28ab4c.png",
@@ -11,10 +11,10 @@
     "static/media/shield-with-question-mark.svg": "/hp-app/static/media/shield-with-question-mark.304fa53faea496007d35b514be75eabe.svg",
     "index.html": "/hp-app/index.html",
     "main.7ca5e2e3.css.map": "/hp-app/static/css/main.7ca5e2e3.css.map",
-    "main.b99d8320.js.map": "/hp-app/static/js/main.b99d8320.js.map"
+    "main.8040c5fb.js.map": "/hp-app/static/js/main.8040c5fb.js.map"
   },
   "entrypoints": [
     "static/css/main.7ca5e2e3.css",
-    "static/js/main.b99d8320.js"
+    "static/js/main.8040c5fb.js"
   ]
 }
