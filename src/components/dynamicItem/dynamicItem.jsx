@@ -76,7 +76,7 @@ const View = ({ item, category }) => {
 
   return (
     <>
-      <Link to={`/${category}`} className='button back'>
+      <Link to={category === 'characters' ? '/' : `/${category}`} className='button back'>
         <Icon path={mdiArrowLeft} size={'25px'} />
         Back
       </Link>
