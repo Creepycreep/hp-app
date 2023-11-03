@@ -1,10 +1,9 @@
-
+import { Helmet } from 'react-helmet';
 import { useState } from 'react';
 
 import ErrorBoundary from '../components/errorBoundary/errorBoundary';
 
 import Card from '../components/card/card';
-import Search from '../components/search/search';
 import CardList from '../components/card-list/card-list';
 
 const MainPage = () => {
@@ -17,6 +16,9 @@ const MainPage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Harry Potter's information portal</title>
+      </Helmet>
       <section className='main__col s-cards'>
         <ErrorBoundary>
           <CardList category={'characters'} onCharSelected={onCharSelected} />
@@ -24,7 +26,6 @@ const MainPage = () => {
       </section>
 
       <aside className='main__col s-aside'>
-        <Search />
         <ErrorBoundary>
           <Card charId={selectedChar} />
         </ErrorBoundary>

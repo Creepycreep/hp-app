@@ -1,5 +1,7 @@
 import './dynamicItem.scss'
 
+import { Helmet } from 'react-helmet';
+
 import noImg from '../../core/assets/images/noImg.png'
 import Icon from '@mdi/react';
 import { mdiArrowLeft } from '@mdi/js';
@@ -42,7 +44,12 @@ const DynamicItem = () => {
 
   const isError = error ? <Error /> : null;
   const isLoading = loading ? <Spinner /> : null;
-  const content = !(loading || error || !item) ? <View category={category} item={item} /> : null;
+  const content = !(loading || error || !item) ?
+    <>
+      <Helmet><title>{item.name}</title></Helmet>
+      <View category={category} item={item} />
+    </>
+    : null;
 
   return (
     <div className="item">

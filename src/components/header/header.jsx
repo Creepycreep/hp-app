@@ -10,7 +10,7 @@ const Header = () => {
         <h1><Link to="/">Hogwarts' information portal</Link></h1>
 
         <nav className='header__menu menu'>
-          <NavLink to='/characters' className={({ isActive }) => (isActive ? 'menu__item  is-active' : 'menu__item ')}>Characters</NavLink>
+          <NavLink to='/' className={({ isActive }) => (isActive ? 'menu__item  is-active' : 'menu__item ')}>Characters</NavLink>
           <span>/</span>
           <NavLink to='/spells' className={({ isActive }) => (isActive ? 'menu__item  is-active' : 'menu__item ')} >Spells</NavLink>
           <span>/</span>

@@ -1,3 +1,5 @@
+import { Helmet } from 'react-helmet';
+
 import { Link } from 'react-router-dom';
 import Icon from '@mdi/react';
 import { mdiHomeOutline } from '@mdi/js';
@@ -15,6 +17,10 @@ const LostPage = () => {
         fontSize: '22px',
         textAlign: 'center'
       }}>
+
+      <Helmet>
+        <title>404</title>
+      </Helmet>
 
       <h1 style={{ fontSize: '48px' }}>It seems this page doesn't exist...</h1>
 
