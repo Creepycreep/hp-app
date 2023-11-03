@@ -1,85 +1,57 @@
-import { Component } from 'react';
+import '../card/card.scss'
 import Icon from '@mdi/react';
 
-import '../card/card.scss'
+import { useState, useEffect } from 'react';
+import useHPService from '../../services/HPServices';
+import { Link } from 'react-router-dom';
 
-import HPService from '../../services/HPServices';
 import Spinner from '../spinner/spinner.js';
 import Error from '../error/error';
 import Skeleton from '../skeleton/skeleton';
 
-class Card extends Component {
-  state = {
-    char: null,
-    loading: false,
-    error: false
-  }
+const Card = (props) => {
+  const { loading, error, getCharacter } = useHPService();
 
-  hpService = new HPService();
+  const [char, setChar] = useState(null);
 
-  componentDidMount() {
-    this.updateChar()
-  }
+  useEffect(() => {
+    updateChar();
+  }, [props.charId])
 
-  componentDidUpdate(prevProps) {
-    if (this.props.charId !== prevProps.charId) {
-      this.updateChar()
-    }
-  }
 
-  updateChar = () => {
-    const { charId } = this.props;
-    // this.wow.no = 0;
+  const updateChar = () => {
+    const { charId } = props;
 
     if (!charId) {
       return
     }
-
-    this.onCharLoading();
-    this.hpService
-      .getCharacter(charId)
+    getCharacter(charId)
       .then(data => {
-        this.onCharLoaded(data)
+        onCharLoaded(data)
       })
-      .catch(this.onError)
   }
 
-  onCharLoaded = (char) => {
-    this.setState({ char, loading: false })
+  const onCharLoaded = (char) => {
+    setChar(char);
   }
 
-  onCharLoading = () => {
-    this.setState({ loading: true })
-  }
+  const isSkeleton = error || loading || char ? null : <Skeleton />;
+  const isError = error ? <Error /> : null;
+  const isLoading = loading ? <Spinner /> : null;
+  const content = !(loading || error || !char) ? <View char={char} id={props.charId} /> : null;
 
-  onError = () => {
-    this.setState({
-      loading: false, error: true
-    })
-  }
-
-
-  render() {
-    const { char, loading, error } = this.state;
-
-    const isSkeleton = error || loading || char ? null : <Skeleton />;
-    const isError = error ? <Error /> : null;
-    const isLoading = loading ? <Spinner /> : null;
-    const content = !(loading || error || !char) ? <View char={char} /> : null;
-
-    return (
-      <div className="card">
-        {isSkeleton}
-        {isError}
-        {isLoading}
-        {content}
-      </div>
-    )
-  }
+  return (
+    <div className="card">
+      {isSkeleton}
+      {isError}
+      {isLoading}
+      {content}
+    </div>
+  )
 }
 
-const View = ({ char }) => {
-  const { thumbnail, name, gender, species, house, blood_status, animagus, patronus, wands, born, died, self, wiki } = char;
+const View = ({ char, id }) => {
+  const { thumbnail, name, gender, species, house, blood_status, animagus, patronus, wands, born, died, wiki } = char;
 
   let wandsArr = []
   if (wands) {
@@ -154,7 +126,7 @@ const View = ({ char }) => {
       </div>
 
       <div className="card__controls">
-        <a href={self} className='button button--filled'>Homepage</a>
+        <Link to={`characters/${id}`} className='button button--filled'>Homepage</Link>
         <a href={wiki} className='button button--outline'>Wiki</a>
       </div>
     </>

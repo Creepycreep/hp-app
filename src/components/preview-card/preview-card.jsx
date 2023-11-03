@@ -1,6 +1,8 @@
 import './preview-card.scss'
 
-const PreviewCard = ({ name, thumbnail, houseString, onCharSelected }) => {
+import { Link } from 'react-router-dom';
+
+const PreviewCard = ({ name, thumbnail, houseString, onCharSelected, category, id }) => {
   const houseColor = (houseString) => {
     switch (houseString) {
       case 'Gryffindor':
@@ -16,9 +18,26 @@ const PreviewCard = ({ name, thumbnail, houseString, onCharSelected }) => {
     }
   }
 
+  const render = category === 'characters' ?
+    <div onClick={onCharSelected} className={`preview-card ${houseColor(houseString)}`}>
+      <View thumbnail={thumbnail} name={name} />
+    </div>
+    :
+    <Link to={`/${category}/${id}`} className={`preview-card`}>
+      <View thumbnail={thumbnail} name={name} />
+    </Link>
+
 
   return (
-    <div onClick={onCharSelected} className={`preview-card ${houseColor(houseString)}`}>
+    <>
+      {render}
+    </>
+  )
+}
+
+const View = ({ thumbnail, name }) => {
+  return (
+    <>
       <div className="preview-card__image">
         <img src={thumbnail} alt={name} />
       </div>
@@ -26,9 +45,8 @@ const PreviewCard = ({ name, thumbnail, houseString, onCharSelected }) => {
       <div className="preview-card__text">
         <span>{name}</span>
       </div>
-    </div>
+    </>
   )
-
 }
 
 export default PreviewCard

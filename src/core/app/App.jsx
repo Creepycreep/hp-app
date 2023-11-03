@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import './App.scss'
 
@@ -6,50 +6,34 @@ import ErrorBoundary from '../../components/errorBoundary/errorBoundary';
 
 import Header from '../../components/header/header';
 import CardRandom from '../../components/card-random/card-random';
-import Card from '../../components/card/card';
-import Search from '../../components/search/search';
-import CardList from '../../components/card-list/card-list';
 
-class App extends Component {
-  state = {
-    selectedChar: null
-  }
+import { MainPage, ListPage, LostPage, ItemPage } from '../../pages/'
 
-  onCharSelected = (id) => {
-    this.setState({
-      selectedChar: id
-    })
-  }
+const App = () => {
 
-  render() {
-    return (
-      <>
-        <Header />
+  return (
+    <Router>
+      <Header />
 
-        <ErrorBoundary>
-          <CardRandom />
-        </ErrorBoundary>
+      <ErrorBoundary>
+        <CardRandom />
+      </ErrorBoundary>
 
-        <div className="container">
-          <main className="main">
-            <section className='main__col s-cards'>
-              <ErrorBoundary>
-                <CardList onCharSelected={this.onCharSelected} />
-              </ErrorBoundary>
-            </section>
+      <div className="container">
+        <main className="main">
+          <Routes>
+            <Route path='/' element={<MainPage />} />
+            <Route path='/:category' element={<ListPage />} />
+            <Route path='/:category/:itemId' element={<ItemPage />} />
 
-            <aside className='main__col s-aside'>
-              <Search />
-              <ErrorBoundary>
-                <Card charId={this.state.selectedChar} />
-              </ErrorBoundary>
-            </aside>
-          </main>
-        </div>
-      </>
-    );
-  }
+            <Route path='*' element={<LostPage />} />
+          </Routes>
+        </main>
+      </div>
 
+
+    </Router>
+  );
 }
 
 export default App;

@@ -7,38 +7,51 @@ import ravenclaw from '../core/assets/icons/ravenclaw.svg';
 import slytherin from '../core/assets/icons/slytherin.svg';
 import unknown from '../core/assets/icons/shield-with-question-mark.svg';
 
+import { useHTTP } from '../hooks/http.hooks';
 
-class HPService {
+const useHPService = () => {
+  const { loading, request, error, clearError } = useHTTP()
   //46 char pages
-  _apiBase = 'https://api.potterdb.com/v1';
+  const _apiBase = 'https://api.potterdb.com/v1';
   //no pages
-  _apiBase2 = 'https://hp-api.onrender.com/api/';
+  // const _apiBase2 = 'https://hp-api.onrender.com/api/';
 
-  _pageNum = 9;
+  const _category = 'characters'
+  const _pageNum = 9;
 
-  getData = async (url) => {
-    let result = await fetch(url);
-    if (!result.ok) {
-      throw new Error(`Could not fetch ${url}, status: ${result.status}`);
+  // getData = async (url) => {
+  //   let result = await fetch(url);
+  //   if (!result.ok) {
+  //     throw new Error(`Could not fetch ${url}, status: ${result.status}`);
+  //   }
+  //   return await result.json()
+  // }
+
+  const getId = async (pageNum) => {
+    return await request(`${_apiBase}/characters?page[size]=100?page[number]=${pageNum}`);
+  }
+
+  const getAllCharacters = async (category = _category, pageNum = _pageNum) => {
+    const result = await request(`${_apiBase}/${category}?page[size]=${pageNum}?page[number]=0`);
+
+    if (category === 'characters') {
+      return result.data.map(char => _transformCharacter(char))
+    } else if (category === 'potions' || category === 'spells') {
+      return result.data.map(char => _transformItem(char))
     }
-    return await result.json()
   }
 
-  getId = async (pageNum) => {
-    return await this.getData(`${this._apiBase}/characters?page[size]=100?page[number]=${pageNum}`);
+  const getCharacter = async (id) => {
+    const result = await request(`${_apiBase}/characters/${id}`);
+    return _transformCharacter(result.data);
   }
 
-  getAllCharacters = async (pageNum = this._pageNum) => {
-    const result = await this.getData(`${this._apiBase}/characters?page[size]=${pageNum}?page[number]=0`);
-    return result.data.map(char => this._transformCharacter(char))
+  const getItem = async (id, category) => {
+    const res = await request(`${_apiBase}/${category}/${id}`);
+    return res.data.attributes
   }
 
-  getCharacter = async (id) => {
-    const result = await this.getData(`${this._apiBase}/characters/${id}`);
-    return this._transformCharacter(result.data);
-  }
-
-  _transformCharacter = (char) => {
+  const _transformCharacter = (char) => {
     const charAttr = char.attributes
 
     const genderIcon = (gender) => {
@@ -82,6 +95,19 @@ class HPService {
       wands: charAttr.wands.length === 0 ? null : charAttr.wands,
     }
   }
+
+  const _transformItem = (item) => {
+    const itemAttr = item.attributes
+
+    return {
+      id: itemAttr.slug,
+      thumbnail: itemAttr.image ? itemAttr.image : noImg,
+      name: itemAttr.name,
+    }
+  }
+
+
+  return { loading, error, getId, getAllCharacters, getCharacter, getItem, clearError }
 }
 
-export default HPService
+export default useHPService

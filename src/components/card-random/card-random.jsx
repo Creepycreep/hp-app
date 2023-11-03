@@ -1,97 +1,76 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import Icon from '@mdi/react';
+import { mdiGenderMale } from '@mdi/js';
 
 import '../card/card.scss';
 import './card-random.scss';
 
-import HPService from '../../services/HPServices';
+import useHPService from '../../services/HPServices';
 import Spinner from '../spinner/spinner.js';
 import Error from '../error/error';
 
-class CardRandom extends Component {
+const CardRandom = () => {
 
-  state = {
-    char: {},
-    loading: true,
-    error: false
-  }
+  const [char, setChar] = useState({})
 
-  hpService = new HPService();
+  useEffect(() => {
+    randomData()
+  }, [])
 
-  randomData = () => {
-    // this.wow.no = 0;
+  const { loading, error, getId, getCharacter, clearError } = useHPService();
 
-    this.hpService
-      .getId(this.getRandomId(46, 0))
+  const randomData = () => {
+    // this.wow.no = 0; 
+    getId(getRandomId(46, 0))
       .then(res => {
-        const id = res.data.map(item => item.id)[this.getRandomId(99, 0)];
+        const id = res.data.map(item => item.id)[getRandomId(99, 0)];
 
-        this.updateChar(id)
+        updateChar(id)
       });
   }
 
-  getRandomId = (max, min) => {
+  const getRandomId = (max, min) => {
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
-  onCharLoaded = (char) => {
-    this.setState({ char, loading: false })
+  const onCharLoaded = (char) => {
+    setChar(char)
   }
 
-  onCharLoading = () => {
-    this.setState({ loading: true })
+  const updateChar = (slug) => {
+    clearError()
+    getCharacter(slug)
+      .then(onCharLoaded)
   }
 
-  onError = () => {
-    this.setState({
-      loading: false, error: true
-    })
-  }
+  const isError = error ? <Error /> : null;
+  const isLoading = loading ? <Spinner /> : null;
+  const content = !(isError || isLoading) ? <View char={char} /> : null;
 
-  updateChar = (slug) => {
-    this.onCharLoading();
-    const id = slug;
-    this.hpService
-      .getCharacter(id)
-      .then(this.onCharLoaded)
-      .catch(this.onError);
-  }
+  return (
+    <section className='random' data-random="wow">
+      <div className="container">
+        <div className="random__body">
+          {isError}
+          {isLoading}
+          {content}
+          <div className='random__btn'>
+            <p>Random character for today!<br />
+              Do you want to get to know him better?</p>
 
-  componentDidMount() {
-    this.randomData()
-  }
-
-  render() {
-    const { char, loading, error } = this.state;
-
-    const isError = error ? <Error /> : null;
-    const isLoading = loading ? <Spinner /> : null;
-    const content = !(isError || isLoading) ? <View char={char} /> : null;
-
-    return (
-      <section className='random' data-random="wow">
-        <div className="container">
-          <div className="random__body">
-            {isError}
-            {isLoading}
-            {content}
-            <div className='random__btn'>
-              <p>Random character for today!<br />
-                Do you want to get to know him better?</p>
-
-              <p>Or choose another one</p>
-              <button onClick={this.randomData} className='button button--filled random__btn--trigger'>TRY IT</button>
-            </div >
-          </div>
+            <p>Or choose another one</p>
+            <button onClick={randomData} className='button button--filled random__btn--trigger'>TRY IT</button>
+          </div >
         </div>
-      </section>
-    )
-  }
+      </div>
+    </section>
+  )
 }
 
 const View = ({ char }) => {
-  const { thumbnail, name, gender, house, blood_status, self, wiki } = char
+  const { id, thumbnail, name, gender, house, blood_status, wiki } = char
 
   return (
     <div className="card random__card">
@@ -105,7 +84,7 @@ const View = ({ char }) => {
       <div className="card__description">
         <div>
           <span>Gender: </span>
-          <Icon path={gender} size={'24px'} />
+          <Icon path={gender ? gender : mdiGenderMale} size={'24px'} />
         </div>
 
         <div>
@@ -116,7 +95,7 @@ const View = ({ char }) => {
       </div>
 
       <div className="card__controls">
-        <a href={self} className='button button--filled'>Homepage</a>
+        <Link to={`characters/${id}`} className='button button--filled'>Homepage</Link>
         <a href={wiki} className='button button--outline'>Wiki</a>
       </div>
     </div>

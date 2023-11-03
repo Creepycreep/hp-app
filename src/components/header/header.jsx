@@ -1,18 +1,20 @@
 import './header.scss'
 
+import { Link, NavLink } from 'react-router-dom'
+
 const Header = () => {
 
   return (
     <header className='header'>
       <div className="container">
-        <h1>Hogwarts' information portal</h1>
+        <h1><Link to="/">Hogwarts' information portal</Link></h1>
 
         <nav className='header__menu menu'>
-          <button href='#' className='menu__item is-active'>Characters</button>
+          <NavLink to='/characters' className={({ isActive }) => (isActive ? 'menu__item  is-active' : 'menu__item ')}>Characters</NavLink>
           <span>/</span>
-          <button href='#' className='menu__item '>Spells</button>
+          <NavLink to='/spells' className={({ isActive }) => (isActive ? 'menu__item  is-active' : 'menu__item ')} >Spells</NavLink>
           <span>/</span>
-          <button href='#' className='menu__item '>Potions</button>
+          <NavLink to='/potions' className={({ isActive }) => (isActive ? 'menu__item  is-active' : 'menu__item ')} >Potions</NavLink>
         </nav>
       </div>
     </header>
