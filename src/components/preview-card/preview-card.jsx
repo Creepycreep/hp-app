@@ -23,7 +23,7 @@ const PreviewCard = ({ name, thumbnail, houseString, onCharSelected, category, i
       <View thumbnail={thumbnail} name={name} />
     </div>
     :
-    <Link to={`/${category}/${id}`} className={`preview-card`}>
+    <Link to={`/hp-app/${category}/${id}`} className={`preview-card`}>
       <View thumbnail={thumbnail} name={name} />
     </Link>
 

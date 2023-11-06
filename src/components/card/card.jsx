@@ -126,7 +126,7 @@ const View = ({ char, id }) => {
       </div>
 
       <div className="card__controls">
-        <Link to={`characters/${id}`} className='button button--filled'>Homepage</Link>
+        <Link to={`/hp-app/characters/${id}`} className='button button--filled'>Homepage</Link>
         <a href={wiki} className='button button--outline'>Wiki</a>
       </div>
     </>

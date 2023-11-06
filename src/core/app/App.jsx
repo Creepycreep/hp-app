@@ -26,9 +26,9 @@ const App = () => {
         <main className="main">
           <Suspense fallback={<span>Loading...</span>}>
             <Routes>
-              <Route path='/' element={<MainPage />} />
-              <Route path='/:category' element={<ListPage />} />
-              <Route path='/:category/:itemId' element={<ItemPage />} />
+              <Route path='/hp-app' element={<MainPage />} />
+              <Route path='/hp-app/:category' element={<ListPage />} />
+              <Route path='/hp-app/:category/:itemId' element={<ItemPage />} />
 
               <Route path='*' element={<LostPage />} />
             </Routes>
